@@ -1,10 +1,10 @@
 package com.company;
 
-import static com.company.StreamExamples5ParallelPerformance.*;
-
 import java.util.concurrent.TimeUnit;
 import java.util.stream.LongStream;
 import java.util.stream.Stream;
+
+import static com.company.StreamExamples5ParallelPerformance.*;
 
 class StreamExamples5ParallelPerformance {
     private static void slowDown() {
@@ -54,10 +54,10 @@ class StreamExamples5ParallelPerformance {
                          .getAsLong();
     }
 }
-public class Main {
+public class StreamMain {
 
     public static void main(String[] args) {
-        final long n = 1000;
+        final long n = 100000;
         final long start = System.currentTimeMillis();
         System.out.println("               Gause : " + ((1 + n) * (n / 2)));
         System.out.println("                       " + (System.currentTimeMillis() - start) + " ms\n");
