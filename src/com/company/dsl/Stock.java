@@ -3,11 +3,13 @@ package com.company.dsl;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
+import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import static com.company.dsl.MethodChainingOrderBuilder.forCustomer;
+import static org.assertj.core.api.Assertions.assertThat;
 
 @Getter @Setter
 public class Stock {
@@ -31,7 +33,7 @@ class Trade {
 
 class Order {
     private String customer;
-    private List<Trade> trades = new ArrayList<>();
+    private final List<Trade> trades = new ArrayList<>();
 
     public void addTrade(Trade trade) {
         trades.add(trade);
@@ -119,22 +121,28 @@ class TradeBuilderWithStock {
     }
 }
 
-class StockMain {
+
+class StockOrderTest {
+
     public static void main(String[] args) {
+        new StockOrderTest().orderTest();
+    }
+    @Test
+    public void orderTest() {
+        // given
         Order order = forCustomer("BigBank")
-                     .buy(80)
-                     .stock("IBM")
-                     .on("NYSE")
-                     .at(125.00)
-                     .sell(50)
-                     .stock("GOOGLE")
-                     .on("NASDAQ")
-                     .at(375.00)
-                     .end();
-
-        System.out.println(order.getCustomer());
-        System.out.println(order.getValue());
-
+                .buy(80)
+                .stock("IBM")
+                .on("NYSE")
+                .at(125.00)
+                .sell(50)
+                .stock("GOOGLE")
+                .on("NASDAQ")
+                .at(375.00)
+                .end();
+        //then
+        assertThat(order.getCustomer()).isEqualTo("BigBank");
+        assertThat(order.getValue()).isSameAs(10000);
     }
 }
 
