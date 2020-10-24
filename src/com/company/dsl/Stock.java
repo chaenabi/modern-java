@@ -125,7 +125,7 @@ class TradeBuilderWithStock {
 class StockOrderTest {
 
     public static void main(String[] args) {
-        new StockOrderTest().orderTest();
+      new StockOrderTest().orderTest();
     }
     @Test
     public void orderTest() {
@@ -145,9 +145,6 @@ class StockOrderTest {
         assertThat(order.getValue()).isSameAs(10000);
     }
 }
-
-
-
 
 
 
