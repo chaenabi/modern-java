@@ -1,12 +1,14 @@
+/*
 package com.company;
 
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-import static java.lang.Math.sqrt;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
+
+import static java.lang.Math.sqrt;
 
 public class FlatMapEx {
     public static void main(String[] args) {
@@ -17,8 +19,8 @@ public class FlatMapEx {
 
 
     private static void flatMap1() {
-        List<Integer> number1 = List.of(1, 2, 3);
-        List<Integer> number2 = List.of(3, 4);
+        List<Integer> number1 = Arrays.asList(1, 2, 3);
+        List<Integer> number2 = Arrays.asList(3, 4);
 
         List<int[]> pairs = number1.stream()
                 .flatMap(i -> number2.stream()
@@ -47,3 +49,4 @@ public class FlatMapEx {
 
     }
 }
+*/

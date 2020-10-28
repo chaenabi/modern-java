@@ -31,6 +31,8 @@ class BoxHandler {
         CarToy carToy = (CarToy) box.get(); // get.
         System.out.println(toy);
         // cannot use box.set() by WildCard: <? extends Toy>
+
+
     }
 
     public static void inBox(Box<? super Toy> box, Toy n) { // must set only.

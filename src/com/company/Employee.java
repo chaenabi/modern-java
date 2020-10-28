@@ -27,7 +27,7 @@ public class Employee {
         Good("우수", 0.06), Normal("보통", 0.04), Bad("불량", 0.02);
         private final String grade;
         private final double raise;
-        private Grade(String grade, double raise) {
+        Grade(String grade, double raise) {
             this.grade = grade;
             this.raise = raise;
         }

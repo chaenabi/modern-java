@@ -1,3 +1,4 @@
+/*
 package com.company;
 
 import java.util.function.BiFunction;
@@ -12,10 +13,10 @@ public enum Calculator {
 
     private Function<Long, Long> expression;
     private BiFunction<Long, Long, Double> pyhagoras;
-    private Calculator(Function<Long, Long> expression) {
+    Calculator(Function<Long, Long> expression) {
         this.expression = expression;
     }
-    private Calculator(BiFunction<Long, Long, Double> pyhagoras) {
+    Calculator(BiFunction<Long, Long, Double> pyhagoras) {
         this.pyhagoras = pyhagoras;
     }
     public long calculate(long value) {
@@ -66,3 +67,4 @@ class RunCalculator {
     }
 }
 
+*/

@@ -17,13 +17,13 @@ class Point {
 
 public class FrozenBeverage {
     private static int[][] tray;
-    private int[] dx = { 0, 1, 0, -1 }; // 12시부터 시계방향으로
-    private int[] dy = { -1, 0, 1, 0 };
+    private final int[] dx = { 0, 1, 0, -1 }; // 12시부터 시계방향으로
+    private final int[] dy = { -1, 0, 1, 0 };
     private boolean[][] visited;
     static int row, col;
-    private Queue<Point> queue = new LinkedList<>();
-    private ArrayList<Integer> list = new ArrayList<>();
-    private BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    private final Queue<Point> queue = new LinkedList<>();
+    private final ArrayList<Integer> list = new ArrayList<>();
+    private final BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
     public static void main(String[] args) throws IOException {
         FrozenBeverage frozenBeverage = new FrozenBeverage();

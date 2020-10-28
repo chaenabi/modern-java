@@ -4,8 +4,6 @@ import java.util.concurrent.TimeUnit;
 import java.util.stream.LongStream;
 import java.util.stream.Stream;
 
-import static com.company.StreamExamples5ParallelPerformance.*;
-
 class StreamExamples5ParallelPerformance {
     private static void slowDown() {
         try {
@@ -57,7 +55,7 @@ class StreamExamples5ParallelPerformance {
 public class StreamMain {
 
     public static void main(String[] args) {
-        final long n = 100000;
+        /*final long n = 100000;
         final long start = System.currentTimeMillis();
         System.out.println("               Gause : " + ((1 + n) * (n / 2)));
         System.out.println("                       " + (System.currentTimeMillis() - start) + " ms\n");
@@ -77,7 +75,9 @@ public class StreamMain {
         final long start5 = System.currentTimeMillis();
         System.out.println("parallelRangedSum(n) : " + parallelRangedSum(n));
         System.out.println("                       " + (System.currentTimeMillis() - start5) + " ms\n");
-
+*/
+        int n = 0;
+        /* \u000a System.out.print(++n); */
 
     }
 }
