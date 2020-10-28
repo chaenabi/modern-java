@@ -19,7 +19,6 @@ public class BabyPork3BrotherStory implements OldStory {
         Pork(String bornOrder) { } // for ease round debug
     }
 
-    Queue<Consumer<Point>> process = new LinkedList<>();
     Consumer<Point> method = this::build;
     int[] dx = { -1, 1, 0, 0 };
     int[] dy = { 0, 0, 1, -1 };
@@ -27,15 +26,8 @@ public class BabyPork3BrotherStory implements OldStory {
     @Override
     public BabyPork3BrotherStory startReading() {
         house.initHeritage(); // 아기 돼지 삼형제가 아무것도 지어지지 않은 땅을 유산으로 받았어요.
-        int n = Pork.values().length;
-        while(n-- > 0) {
-            this.process.offer(this.method);
-        }
+        method.accept(new Point(0, 0));
 
-        while(!this.process.isEmpty()) {
-            Consumer<Point> works = this.process.poll();
-            works.accept(new Point(0, 0));
-        }
         return this;
     }
 
@@ -74,17 +66,17 @@ public class BabyPork3BrotherStory implements OldStory {
                 if (row[j] == BuildType.NONE) { // 아직 이 좌표에 집이 지어지지 않았으면 동작합니다.
                     queue.offer(new Point(x, y)); // 현재 돼지가 위치한 좌표를 저장하여 재활용할 수 있게 합니다.
                     switch (who) {
-                        case FIRST  :
+                        case FIRST  :    // 게으른 첫째는 3턴마다 집을 짓습니다.
                             if(j % 3 == 0)
                                 row[j] = BuildType.HAY;
                                 return;
 
-                        case SECOND :
+                        case SECOND :     // 덜 부지런한 둘째는 2턴마다 집을 짓습니다.
                             if(j % 2 == 0)
                                 row[j] = BuildType.WOOD;
                                 return;
 
-                        case LAST :
+                        case LAST :     // 부지런한 셋째는 매턴마다 집을 짓습니다.
                                 row[j] = BuildType.BRICK;
                                 return;
                     }

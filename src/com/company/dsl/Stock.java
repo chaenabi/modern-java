@@ -131,15 +131,15 @@ class StockOrderTest {
     public void orderTest() {
         // given
         Order order = forCustomer("BigBank")
-                .buy(80)
-                .stock("IBM")
-                .on("NYSE")
-                .at(125.00)
-                .sell(50)
-                .stock("GOOGLE")
-                .on("NASDAQ")
-                .at(375.00)
-                .end();
+                        .buy(80)
+                        .stock("IBM")
+                        .on("NYSE")
+                        .at(125.00)
+                        .sell(50)
+                        .stock("GOOGLE")
+                        .on("NASDAQ")
+                        .at(375.00)
+                        .end();
         //then
         assertThat(order.getCustomer()).isEqualTo("BigBank");
         assertThat(order.getValue()).isSameAs(10000);
