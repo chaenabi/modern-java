@@ -19,7 +19,7 @@ public class GroupingBuilder<T, D, K> {
         return new GroupingBuilder<>(groupingBy(classifier, collector));
     }
 
-    public static <T, D, K> GroupingBuilder<T, List<T>, K> groupOn(Function<? super T, ? extends K> classifier) {
+    public static <T, K> GroupingBuilder<T, List<T>, K> groupOn(Function<? super T, ? extends K> classifier) {
         return new GroupingBuilder<>(groupingBy(classifier));
     }
 }

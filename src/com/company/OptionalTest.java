@@ -1,6 +1,7 @@
 package com.company;
 
 import org.junit.Test;
+import org.junit.jupiter.api.DisplayName;
 
 import java.util.Arrays;
 import java.util.List;
@@ -12,40 +13,25 @@ import static org.junit.Assert.assertTrue;
 public class OptionalTest {
 
     @Test
-    public void dataIncludesNull() {
+    @DisplayName("if datalist has null, replace to optional class")
+    public void when_data_has_Null() {
         // provided resource
         List<Member> members = Arrays.asList(new Member("홍길동", 20),
-                                            new Member("장길산", 30),
-                                            null,
-                                            new Member("이순신", 40),
-                                            null
-                                            );
+                                             new Member("장길산", 30),
+                                             null,
+                                             new Member("이순신", 40),
+                                             null
+                                             );
 
         // when
         List<Optional<Member>> wrappedMembers = members.stream()
                                                        .map(Optional::ofNullable)
                                                        .collect(Collectors.toList());
-
-        wrappedMembers.forEach(System.out::println); // 내용 출력
-
         // validate
         assertTrue(wrappedMembers.stream().anyMatch(Optional::isEmpty));
     }
 
     static class Member {
-        private final String name;
-        private final int age;
-
-        public Member(String name, int age) {
-            this.name = name;
-            this.age = age;
-        }
-        @Override
-        public String toString() {
-            return "Member{" +
-                    "name='" + name + '\'' +
-                    ", age=" + age +
-                    '}';
-        }
+        public Member(String name, int age) {} /** @data just for identify */
     }
 }

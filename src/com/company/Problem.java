@@ -1,8 +1,9 @@
 package com.company;
 
-import java.util.Comparator;
 import java.util.List;
-import java.util.stream.Collectors;
+
+import static java.util.Comparator.comparing;
+import static java.util.stream.Collectors.toList;
 
 public class Problem {
     public static void main(String[] args) {
@@ -22,8 +23,8 @@ public class Problem {
         // 1. 2011년에 일어난 모든 트랜잭션을 찾아 값을 오름차순으로 정리하시오.
         transactions.stream()
                     .filter(year -> year.getYear() == 2011)
-                    .sorted(Comparator.comparing(Transaction::getValue))
-                    .collect(Collectors.toList())
+                    .sorted(comparing(Transaction::getValue))
+                    .collect(toList())
                     .forEach(i -> System.out.println(i.getTrader()));
 
         System.out.println();
@@ -41,8 +42,8 @@ public class Problem {
         transactions.stream()
                     .map(Transaction::getTrader)
                     .filter(city -> city.getCity().equals("Cambridge"))
-                    .sorted(Comparator.comparing(Trader::getName))
-                    .collect(Collectors.toList())
+                    .sorted(comparing(Trader::getName))
+                    .collect(toList())
                     .forEach(System.out::println);
 
         System.out.println();
@@ -50,8 +51,8 @@ public class Problem {
         // 4. 모든 거래자의 이름을 알파벳순으로 정렬해서 반환하시오.
         transactions.stream()
                     .map(Transaction::getTrader)
-                    .sorted(Comparator.comparing(Trader::getName))
-                    .collect(Collectors.toList())
+                    .sorted(comparing(Trader::getName))
+                    .collect(toList())
                     .forEach(System.out::println);
 
         // 5. 밀라노에 거래자가 있는가?
