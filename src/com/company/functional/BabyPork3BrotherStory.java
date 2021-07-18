@@ -27,7 +27,6 @@ public class BabyPork3BrotherStory implements OldStory {
     public BabyPork3BrotherStory startReading() {
         house.initHeritage(); // 아기 돼지 삼형제가 아무것도 지어지지 않은 땅을 유산으로 받았어요.
         method.accept(new Point(0, 0));
-
         return this;
     }
 

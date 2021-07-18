@@ -3,7 +3,6 @@ package com.company.dsl;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
-import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -127,7 +126,7 @@ class StockOrderTest {
     public static void main(String[] args) {
       new StockOrderTest().orderTest();
     }
-    @Test
+
     public void orderTest() {
         // given
         Order order = forCustomer("BigBank")

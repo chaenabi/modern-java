@@ -1,7 +1,6 @@
 package com.company;
 
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
 
 import java.util.Arrays;
 import java.util.List;
@@ -10,12 +9,29 @@ import java.util.stream.Collector;
 
 import static java.util.stream.Collectors.groupingBy;
 
-@RequiredArgsConstructor
 @Getter
 class Car {
-    private final String name;
-    private final Brand brand;
-    private final Color color;
+    private String name;
+    private Brand brand;
+    private Color color;
+
+    public Car(String name, Brand brand, Color color) {
+        this.name = name;
+        this.brand = brand;
+        this.color = color;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public Brand getBrand() {
+        return brand;
+    }
+
+    public Color getColor() {
+        return color;
+    }
 }
 
 enum Brand {

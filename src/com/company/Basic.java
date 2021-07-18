@@ -1,13 +1,16 @@
 package com.company;
 
+import java.math.BigInteger;
+
 public class Basic {
 
     public static void main(String[] args) {
-        int[] arr = new Basic().solution(new int[]{0,0,0,0,0});
-        for (int ar : arr) System.out.print(ar + " ");
-    }
+        // E 69
+        // X 88
+        byte[] value = new byte[2];
+        value[0] = 69;
+        value[1] = 88;
 
-    public int[] solution(int[] answers) {
-        return answers;
+        System.out.println(new BigInteger(1,value));
     }
 }
