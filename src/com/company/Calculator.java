@@ -1,4 +1,3 @@
-/*
 package com.company;
 
 import java.util.function.BiFunction;
@@ -12,18 +11,18 @@ public enum Calculator {
     PYTHAGORAS((n, m) -> Math.sqrt(POWER.calculate(n) + POWER.calculate(m)));
 
     private Function<Long, Long> expression;
-    private BiFunction<Long, Long, Double> pyhagoras;
+    private BiFunction<Long, Long, Double> pythagoras;
     Calculator(Function<Long, Long> expression) {
         this.expression = expression;
     }
-    Calculator(BiFunction<Long, Long, Double> pyhagoras) {
-        this.pyhagoras = pyhagoras;
+    Calculator(BiFunction<Long, Long, Double> pythagoras) {
+        this.pythagoras = pythagoras;
     }
     public long calculate(long value) {
         return expression.apply(value);
     }
     public double calculate(long a, long b) {
-        return pyhagoras.apply(a, b);
+        return pythagoras.apply(a, b);
     }
 }
 
@@ -67,4 +66,3 @@ class RunCalculator {
     }
 }
 
-*/
