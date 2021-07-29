@@ -11,9 +11,9 @@ import static java.util.stream.Collectors.groupingBy;
 
 @Getter
 class Car {
-    private String name;
-    private Brand brand;
-    private Color color;
+    private final String name;
+    private final Brand brand;
+    private final Color color;
 
     public Car(String name, Brand brand, Color color) {
         this.name = name;

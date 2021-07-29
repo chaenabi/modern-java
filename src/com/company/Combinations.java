@@ -6,8 +6,9 @@ import java.util.NoSuchElementException;
 
 public class Combinations<T> implements Iterable<ArrayList<T>> {
 
-    private int totalCombinations;
-    private int n, r;
+    private final int totalCombinations;
+    private final int n;
+    private final int r;
     private int factorial(int n) {
         int p = 1;
         for (int i = n; i > 1; i--) {
@@ -15,7 +16,7 @@ public class Combinations<T> implements Iterable<ArrayList<T>> {
         }
         return p;
     }
-    private ArrayList<T> seq;
+    private final ArrayList<T> seq;
 
     public Combinations(ArrayList<T> sequence, int r) {
         this.r = r;
@@ -35,7 +36,7 @@ public class Combinations<T> implements Iterable<ArrayList<T>> {
 
     private class CombinationIterator implements Iterator<ArrayList<T>> {
         private int count = 0;
-        private int[] pos;
+        private final int[] pos;
 
         private CombinationIterator() {
             pos = new int [r];
