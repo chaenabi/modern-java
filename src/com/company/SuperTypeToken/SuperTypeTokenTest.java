@@ -16,8 +16,10 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class SuperTypeTokenTest {
+
+    @EqualsAndHashCode
     static class TypeSafeMap {
-        Map<Type, Object> map = new HashMap<>();
+        private final Map<Type, Object> map = new HashMap<>();
 
         <T> void put(TypeReference<T> tr, T value) {
             map.put(tr.type, value);
@@ -29,6 +31,15 @@ public class SuperTypeTokenTest {
             if (tr.type instanceof Class<?>) return ((Class<T>) tr.type).cast(map.get(tr.type));
             else return ((Class<T>)((ParameterizedType)tr.type).getRawType()).cast(map.get(tr.type));
         }
+
+        public int size() { return map.size(); }
+        public void clear() { map.clear(); }
+        public boolean isEmpty() { return map.isEmpty(); }
+        public boolean containsKey(Object key) { return map.containsKey(key); }
+        public <T> T remove(T key) { return (T) map.remove(key); }
+        public boolean containsValue(Object value) { return map.containsValue(value); }
+        public Set<Type> keySet() { return map.keySet(); }
+
     }
 
     static class TypeSafeList implements Iterable<TypeSafeList.Types<?>> {
@@ -149,6 +160,12 @@ public class SuperTypeTokenTest {
                                                                             "java.util.List<java.lang.String>>>>");
         assertThat(rt.getSuperType().getNested(2).toString()).isEqualTo("java.util.List<java.util.Map<java.util.Set<java.lang.Integer>, java.util.List<java.lang.String>>>");
         assertThat(rt.getSuperType().getNested(3).toString()).isEqualTo("java.util.Map<java.util.Set<java.lang.Integer>, java.util.List<java.lang.String>>");
+        assertThat(rt.getSuperType().getNested(4).toString()).isEqualTo("java.util.List<java.lang.String>");
+        assertThat(rt.getSuperType().getNested(5).toString()).isEqualTo("java.lang.String");
+        assertThat(rt.getSuperType().getNested(6).toString()).isEqualTo("?");
+        assertThat(rt.getSuperType().getNested(7).toString()).isEqualTo("?");
+        assertThat(rt.getSuperType().getNested(8).toString()).isEqualTo("?");
+        assertThat(rt.getSuperType().getNested(9).toString()).isEqualTo("?");
     }
 
     @Test
