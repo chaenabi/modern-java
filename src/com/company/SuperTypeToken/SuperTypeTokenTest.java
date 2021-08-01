@@ -3,8 +3,8 @@ package com.company.SuperTypeToken;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
-import org.junit.Test;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.springframework.core.ResolvableType;
 
 import java.lang.reflect.ParameterizedType;
@@ -103,6 +103,7 @@ public class SuperTypeTokenTest {
     // T does not used in this class directly, but indirectly (getGenericSuperclass()) uses.
     abstract static class TypeReference<T> {
         final Type type;
+        private T key;
 
         public TypeReference() {
             Type sType = this.getClass().getGenericSuperclass();
@@ -113,6 +114,20 @@ public class SuperTypeTokenTest {
             }
         }
 
+        public TypeReference(T key) {
+            Type sType = this.getClass().getGenericSuperclass();
+            this.key = key;
+
+            if (sType instanceof ParameterizedType) {
+                this.type = ((ParameterizedType) sType).getActualTypeArguments()[0];
+            } else {
+                throw new RuntimeException();
+            }
+        }
+
+        public T getKey() {
+            return key;
+        }
     }
 
     enum Grade { VIP, VVIP }
@@ -138,16 +153,19 @@ public class SuperTypeTokenTest {
         TypeSafeMap m = new TypeSafeMap();
 
         // when
-        m.put(new TypeReference<String>(){}, "String");
-        m.put(new TypeReference<Integer>(){}, 1);
-        m.put(new TypeReference<List<Integer>>(){}, List.of(1,2,3));
-        m.put(new TypeReference<List<String>>(){}, List.of("a", "b", "c"));
+        m.put(new TypeReference<>(){}, "String");
+        m.put(new TypeReference<>(){}, 1);
+        m.put(new TypeReference<>(){}, List.of(1,2,3));
+        m.put(new TypeReference<>(){}, List.of("a", "b", "c"));
+        //m.put(new TypeReference<>(){}, "new String");
+        m.put(new TypeReference<>() {}, new User("asd", 12));
 
         // then
         assertThat(m.get(new TypeReference<String>(){})).isEqualTo("String");
         assertThat(m.get(new TypeReference<Integer>(){})).isEqualTo(1);
         assertThat(m.get(new TypeReference<List<Integer>>(){})).isEqualTo(List.of(1,2,3));
         assertThat(m.get(new TypeReference<List<String>>(){})).isEqualTo(List.of("a","b","c"));
+
     }
 
     @Test

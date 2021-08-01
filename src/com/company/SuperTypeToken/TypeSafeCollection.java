@@ -27,33 +27,19 @@ class TypeSafeMap {
         else return ((Class<T>) ((ParameterizedType) tr.getType()).getRawType()).cast(map.get(tr.getType()));
     }
 
-    public int size() {
-        return map.size();
-    }
+    public int size() { return map.size(); }
 
-    public void clear() {
-        map.clear();
-    }
+    public void clear() { map.clear(); }
 
-    public boolean isEmpty() {
-        return map.isEmpty();
-    }
+    public boolean isEmpty() { return map.isEmpty(); }
 
-    public boolean containsKey(Object key) {
-        return map.containsKey(key);
-    }
+    public boolean containsKey(Object key) { return map.containsKey(key); }
 
-    public <T> T remove(T key) {
-        return (T) map.remove(key);
-    }
+    public <T> T remove(T key) { return (T) map.remove(key); }
 
-    public boolean containsValue(Object value) {
-        return map.containsValue(value);
-    }
+    public boolean containsValue(Object value) { return map.containsValue(value); }
 
-    public Set<Type> keySet() {
-        return map.keySet();
-    }
+    public Set<Type> keySet() { return map.keySet(); }
 }
 
 class TypeSafeList implements Iterable<TypeSafeList.Types<?>> {
