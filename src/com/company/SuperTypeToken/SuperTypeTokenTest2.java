@@ -1,7 +1,7 @@
 package com.company.SuperTypeToken;
 
-import org.junit.Test;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.springframework.core.ResolvableType;
 
 import java.util.List;

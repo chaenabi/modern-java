@@ -1,7 +1,13 @@
 package com.company;
 
+
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+
 import java.util.function.BiFunction;
 import java.util.function.Function;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 //JAVA 8
 public enum Calculator {
@@ -47,22 +53,20 @@ enum Calculator7 {
     abstract double calculate(long n, long m);
 }
 
-class RunCalculator {
-    public static void main(String[] args) {
-        System.out.println("------------JAVA 8-------------");
-        Calculator gause = Calculator.GAUSE;
-        System.out.println(gause.calculate(100));
+class CalculatorTest {
 
-        Calculator pyhagoras = Calculator.PYTHAGORAS;
-        System.out.println(pyhagoras.calculate(3, 4));
+    @Test
+    @DisplayName("java 8 style enum with lambda -> input validation")
+    public void java8() {
+        assertEquals(5050, Calculator.GAUSE.calculate(100));
+        assertEquals(5.0, Calculator.PYTHAGORAS.calculate(3, 4));
+    }
 
-        System.out.println("------------JAVA 7-------------");
-
-        Calculator7 gause7 = Calculator7.GAUSE7;
-        System.out.println(gause7.calculate(100));
-        Calculator7 pytagoras7 = Calculator7.PYTHAGORAS7;
-        System.out.println(pytagoras7.calculate(3, 4));
-
+    @Test
+    @DisplayName("java 8 style enum with lambda -> input validation")
+    public void java7() {
+        assertEquals(5050, Calculator7.GAUSE7.calculate(100));
+        assertEquals(5.0, Calculator7.PYTHAGORAS7.calculate(3, 4));
     }
 }
 

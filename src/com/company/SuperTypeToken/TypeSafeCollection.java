@@ -13,6 +13,14 @@ import static java.util.stream.Collectors.toList;
 class TypeSafeMap {
     Map<Type, Object> map = new HashMap<>();
 
+public class TypeSafeCollection {
+}
+
+@EqualsAndHashCode
+class TypeSafeMap {
+    private final Map<Type, Object> map = new HashMap<>();
+
+
     <T> void put(TypeReference<T> tr, T value) {
         map.put(tr.getType(), value);
     }
@@ -23,12 +31,29 @@ class TypeSafeMap {
         if (tr.getType() instanceof Class<?>) return ((Class<T>) tr.getType()).cast(map.get(tr.getType()));
         else return ((Class<T>) ((ParameterizedType) tr.getType()).getRawType()).cast(map.get(tr.getType()));
     }
+
+    public int size() { return map.size(); }
+
+    public void clear() { map.clear(); }
+
+    public boolean isEmpty() { return map.isEmpty(); }
+
+    public boolean containsKey(Object key) { return map.containsKey(key); }
+
+    public <T> T remove(T key) { return (T) map.remove(key); }
+
+    public boolean containsValue(Object value) { return map.containsValue(value); }
+
+    public Set<Type> keySet() { return map.keySet(); }
+
 }
 
 class TypeSafeList implements Iterable<TypeSafeList.Types<?>> {
 
     @Override
     public Iterator<Types<?>> iterator() {
+
+    public Iterator<TypeSafeList.Types<?>> iterator() {
         return list.iterator();
     }
 
@@ -55,6 +80,11 @@ class TypeSafeList implements Iterable<TypeSafeList.Types<?>> {
 
     <T> void add(TypeReference<T> tr, T data) {
         Types<T> types = new Types<>();
+
+    private final List<TypeSafeList.Types<?>> list = new ArrayList<>();
+
+    <T> void add(TypeReference<T> tr, T data) {
+        TypeSafeList.Types<T> types = new TypeSafeList.Types<>();
         types.type = tr.getType();
         types.data = data;
         list.add(types);
@@ -71,7 +101,12 @@ class TypeSafeList implements Iterable<TypeSafeList.Types<?>> {
         if (tr.getType() instanceof Class<?>)
             return (List<T>) list.stream().filter(e -> e.getType().equals(tr.getType())).map(e -> e.data).collect(toList());
         else
-            return (List<T>) ((Class<T>) ((ParameterizedType) tr.getType()).getRawType()).cast(list.stream().filter(e -> e.type.equals(tr.getType())).map(e -> e.data).collect(toList()));
+            return (List<T>) ((Class<T>) ((ParameterizedType) tr.getType())
+                                                                .getRawType())
+                                                                .cast(list.stream()
+                                                                          .filter(e -> e.type.equals(tr.getType()))
+                                                                          .map(e -> e.data)
+                                                                          .collect(toList()));
     }
 
     Type getType(int index) {
@@ -98,6 +133,7 @@ abstract class TypeReference<T> {
 
     public TypeReference() {
         Type sType = this.getClass().getGenericSuperclass();
+
         if (sType instanceof ParameterizedType) {
             this.type = ((ParameterizedType) sType).getActualTypeArguments()[0];
         } else {
@@ -129,5 +165,29 @@ public class TypeSafeCollection {
         var element5 = tslist.getValues(new TypeReference<Person>() {});
 
         for (var i : tslist) System.out.println(i.getData());
+    }
+}
+=======
+        if (sType instanceof ParameterizedType) type = ((ParameterizedType) sType).getActualTypeArguments()[0];
+        else throw new RuntimeException();
+    }
+
+    public Type getType() {
+        return type;
+    }
+}
+
+class Main {
+    public static void main(String[] args) {
+        TypeSafeList list = new TypeSafeList();
+        list.add(new TypeReference<>() {}, 1);
+        list.add(new TypeReference<>() {}, 2);
+        list.add(new TypeReference<>() {}, "hello world !");
+
+        var e = list.getValues(new TypeReference<Integer>() {});
+        var e2 = list.getValue(2);
+
+        for (var i : e) System.out.println(i);
+        System.out.println(e2);
     }
 }

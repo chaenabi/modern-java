@@ -3,8 +3,8 @@ package com.company.SuperTypeToken;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
-import org.junit.Test;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.springframework.core.ResolvableType;
 
 import java.lang.reflect.ParameterizedType;
@@ -16,8 +16,10 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class SuperTypeTokenTest {
+
+    @EqualsAndHashCode
     static class TypeSafeMap {
-        Map<Type, Object> map = new HashMap<>();
+        private final Map<Type, Object> map = new HashMap<>();
 
         <T> void put(TypeReference<T> tr, T value) {
             map.put(tr.type, value);
@@ -29,6 +31,15 @@ public class SuperTypeTokenTest {
             if (tr.type instanceof Class<?>) return ((Class<T>) tr.type).cast(map.get(tr.type));
             else return ((Class<T>)((ParameterizedType)tr.type).getRawType()).cast(map.get(tr.type));
         }
+
+        public int size() { return map.size(); }
+        public void clear() { map.clear(); }
+        public boolean isEmpty() { return map.isEmpty(); }
+        public boolean containsKey(Object key) { return map.containsKey(key); }
+        public <T> T remove(T key) { return (T) map.remove(key); }
+        public boolean containsValue(Object value) { return map.containsValue(value); }
+        public Set<Type> keySet() { return map.keySet(); }
+
     }
 
     static class TypeSafeList implements Iterable<TypeSafeList.Types<?>> {
@@ -92,6 +103,7 @@ public class SuperTypeTokenTest {
     // T does not used in this class directly, but indirectly (getGenericSuperclass()) uses.
     abstract static class TypeReference<T> {
         final Type type;
+        private T key;
 
         public TypeReference() {
             Type sType = this.getClass().getGenericSuperclass();
@@ -102,6 +114,20 @@ public class SuperTypeTokenTest {
             }
         }
 
+        public TypeReference(T key) {
+            Type sType = this.getClass().getGenericSuperclass();
+            this.key = key;
+
+            if (sType instanceof ParameterizedType) {
+                this.type = ((ParameterizedType) sType).getActualTypeArguments()[0];
+            } else {
+                throw new RuntimeException();
+            }
+        }
+
+        public T getKey() {
+            return key;
+        }
     }
 
     enum Grade { VIP, VVIP }
@@ -127,16 +153,19 @@ public class SuperTypeTokenTest {
         TypeSafeMap m = new TypeSafeMap();
 
         // when
-        m.put(new TypeReference<String>(){}, "String");
-        m.put(new TypeReference<Integer>(){}, 1);
-        m.put(new TypeReference<List<Integer>>(){}, List.of(1,2,3));
-        m.put(new TypeReference<List<String>>(){}, List.of("a", "b", "c"));
+        m.put(new TypeReference<>(){}, "String");
+        m.put(new TypeReference<>(){}, 1);
+        m.put(new TypeReference<>(){}, List.of(1,2,3));
+        m.put(new TypeReference<>(){}, List.of("a", "b", "c"));
+        //m.put(new TypeReference<>(){}, "new String");
+        m.put(new TypeReference<>() {}, new User("asd", 12));
 
         // then
         assertThat(m.get(new TypeReference<String>(){})).isEqualTo("String");
         assertThat(m.get(new TypeReference<Integer>(){})).isEqualTo(1);
         assertThat(m.get(new TypeReference<List<Integer>>(){})).isEqualTo(List.of(1,2,3));
         assertThat(m.get(new TypeReference<List<String>>(){})).isEqualTo(List.of("a","b","c"));
+
     }
 
     @Test
@@ -149,6 +178,12 @@ public class SuperTypeTokenTest {
                                                                             "java.util.List<java.lang.String>>>>");
         assertThat(rt.getSuperType().getNested(2).toString()).isEqualTo("java.util.List<java.util.Map<java.util.Set<java.lang.Integer>, java.util.List<java.lang.String>>>");
         assertThat(rt.getSuperType().getNested(3).toString()).isEqualTo("java.util.Map<java.util.Set<java.lang.Integer>, java.util.List<java.lang.String>>");
+        assertThat(rt.getSuperType().getNested(4).toString()).isEqualTo("java.util.List<java.lang.String>");
+        assertThat(rt.getSuperType().getNested(5).toString()).isEqualTo("java.lang.String");
+        assertThat(rt.getSuperType().getNested(6).toString()).isEqualTo("?");
+        assertThat(rt.getSuperType().getNested(7).toString()).isEqualTo("?");
+        assertThat(rt.getSuperType().getNested(8).toString()).isEqualTo("?");
+        assertThat(rt.getSuperType().getNested(9).toString()).isEqualTo("?");
     }
 
     @Test
