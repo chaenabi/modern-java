@@ -12,7 +12,7 @@ class Point {
     final int y;
 }
 
-public class BabyPork3BrotherStory implements OldStory {
+public class BabyPork3BrotherStory implements com.company.functional.OldStory {
     private final House house = new House();
     enum Pork {
         FIRST("첫째"), SECOND("둘째"), LAST("막내");
