@@ -1,6 +1,7 @@
 package com.company.SuperTypeToken;
 
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
 import lombok.ToString;
 
 import java.lang.reflect.ParameterizedType;
@@ -9,12 +10,16 @@ import java.util.*;
 
 import static java.util.stream.Collectors.toList;
 
+class TypeSafeMap {
+    Map<Type, Object> map = new HashMap<>();
+
 public class TypeSafeCollection {
 }
 
 @EqualsAndHashCode
 class TypeSafeMap {
     private final Map<Type, Object> map = new HashMap<>();
+
 
     <T> void put(TypeReference<T> tr, T value) {
         map.put(tr.getType(), value);
@@ -40,11 +45,14 @@ class TypeSafeMap {
     public boolean containsValue(Object value) { return map.containsValue(value); }
 
     public Set<Type> keySet() { return map.keySet(); }
+
 }
 
 class TypeSafeList implements Iterable<TypeSafeList.Types<?>> {
 
     @Override
+    public Iterator<Types<?>> iterator() {
+
     public Iterator<TypeSafeList.Types<?>> iterator() {
         return list.iterator();
     }
@@ -68,6 +76,11 @@ class TypeSafeList implements Iterable<TypeSafeList.Types<?>> {
         }
     }
 
+    private final List<Types<?>> list = new ArrayList<>();
+
+    <T> void add(TypeReference<T> tr, T data) {
+        Types<T> types = new Types<>();
+
     private final List<TypeSafeList.Types<?>> list = new ArrayList<>();
 
     <T> void add(TypeReference<T> tr, T data) {
@@ -86,10 +99,7 @@ class TypeSafeList implements Iterable<TypeSafeList.Types<?>> {
     @SuppressWarnings("unchecked")
     <T> List<T> getValues(TypeReference<T> tr) {
         if (tr.getType() instanceof Class<?>)
-            return (List<T>) list.stream()
-                                 .filter(e -> e.type.equals(tr.getType()))
-                                  .map(e -> e.data)
-                                  .collect(toList());
+            return (List<T>) list.stream().filter(e -> e.getType().equals(tr.getType())).map(e -> e.data).collect(toList());
         else
             return (List<T>) ((Class<T>) ((ParameterizedType) tr.getType())
                                                                 .getRawType())
@@ -117,11 +127,47 @@ class TypeSafeList implements Iterable<TypeSafeList.Types<?>> {
     }
 }
 
+// T does not used in this class directly, but indirectly (getGenericSuperclass()) uses.
 abstract class TypeReference<T> {
     private final Type type;
 
     public TypeReference() {
         Type sType = this.getClass().getGenericSuperclass();
+
+        if (sType instanceof ParameterizedType) {
+            this.type = ((ParameterizedType) sType).getActualTypeArguments()[0];
+        } else {
+            throw new RuntimeException();
+        }
+    }
+    public Type getType() { return type; }
+}
+
+@ToString @Getter
+class Person { private final String name = "철수"; }
+
+public class TypeSafeCollection {
+    public static void main(String[] args) {
+        TypeSafeList tslist = new TypeSafeList();
+        TypeSafeMap tsMap = new TypeSafeMap();
+
+        tslist.add(new TypeReference<>() {}, 1236);
+        tslist.add(new TypeReference<>() {}, "text");
+        tslist.add(new TypeReference<>() {}, true);
+        tslist.add(new TypeReference<>() {}, false);
+        tslist.add(new TypeReference<>() {}, List.of(1, 2, 3, 4, 5));
+        tslist.add(new TypeReference<>() {}, new Person());
+
+        var element = tslist.getValues(new TypeReference<String>() {});
+        var element2 = tslist.getValues(new TypeReference<Boolean>() {});
+        var element3 = tslist.getValues(new TypeReference<Integer>() {});
+        var element4 = tslist.getValues(new TypeReference<List<Integer>>() {});
+        var element5 = tslist.getValues(new TypeReference<Person>() {});
+
+        for (var i : tslist) System.out.println(i.getData());
+    }
+}
+=======
         if (sType instanceof ParameterizedType) type = ((ParameterizedType) sType).getActualTypeArguments()[0];
         else throw new RuntimeException();
     }
