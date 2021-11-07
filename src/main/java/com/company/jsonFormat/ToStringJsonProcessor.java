@@ -1,4 +1,4 @@
-/*
+
 package com.company.jsonFormat;
 
 import com.google.auto.service.AutoService;
@@ -19,7 +19,7 @@ import java.io.IOException;
 import java.util.Set;
 
 @AutoService(Processor.class)
-@SupportedAnnotationTypes({ "ToStringJson" })
+@SupportedAnnotationTypes("com.company.jsonFormat.ToStringJson")
 @SupportedSourceVersion(SourceVersion.RELEASE_11)
 public class ToStringJsonProcessor extends AbstractProcessor {
 
@@ -40,13 +40,13 @@ public class ToStringJsonProcessor extends AbstractProcessor {
             ClassName className = ClassName.get(typeElement);
 
             MethodSpec toString = MethodSpec.methodBuilder("toString")
+                    .addAnnotation(Override.class)
                     .addModifiers(Modifier.PUBLIC)
-                    .returns(String.class)
                     .addStatement(String.format("return \"%s\"", new Gson().toJson(className)))
+                    .returns(String.class)
                     .build();
 
             TypeSpec name = TypeSpec.classBuilder(className)
-                    .addSuperinterface(className)
                     .addModifiers(Modifier.PUBLIC)
                     .addMethod(toString)
                     .build();
@@ -64,4 +64,15 @@ public class ToStringJsonProcessor extends AbstractProcessor {
         return true;
     }
 }
-*/
+
+@ToStringJson
+class User {
+    private String name;
+    private Integer age;
+}
+
+class JsonTest {
+    public static void main(String[] args) {
+        System.out.println(new User());
+    }
+}
