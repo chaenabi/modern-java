@@ -22,12 +22,21 @@ public class JavaAnnotationTest {
         int n = c1 + c2;
         System.out.println(n);
 
-        int n1 = ~2147483647;
-        int n2 = 2147483647;
+        long n1 = ~0;
+        long n2 = 2147483647;
 
-        long l1 = (long)n1 + (long)n2;
+        // 0000 0000 0000 0000
+        // 1111 1111 1111 1111
+        System.out.println(Long.toBinaryString(~n1));
+        System.out.println(n1);
+        System.out.println(Long.toBinaryString(n1));
+
+        long l1 = n1 + n2;
         System.out.println(l1);
 
     }
-    
+
+    public static void main(String[] args) {
+        new JavaAnnotationTest().test();
+    }
 }

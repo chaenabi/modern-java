@@ -1,10 +1,7 @@
 package com.company.jsonFormat;
 
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
-
+/*
 @Target(ElementType.TYPE)
-@Retention(RetentionPolicy.CLASS)
+@Retention(RetentionPolicy.CLASS) // 애너테이션 프로세싱
 public @interface ToStringJson {}
+*/

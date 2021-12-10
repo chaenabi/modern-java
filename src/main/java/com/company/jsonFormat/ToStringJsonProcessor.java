@@ -1,3 +1,4 @@
+/*
 
 package com.company.jsonFormat;
 
@@ -21,7 +22,7 @@ import java.util.Set;
 @AutoService(Processor.class)
 @SupportedAnnotationTypes("com.company.jsonFormat.ToStringJson")
 @SupportedSourceVersion(SourceVersion.RELEASE_11)
-public class ToStringJsonProcessor extends AbstractProcessor {
+public class ToStringJsonProcessor extends AbstractProcessor { // 애너테이션 프로세싱
 
     @Override
     public boolean process(Set<? extends TypeElement> annotations, RoundEnvironment roundEnv) {
@@ -75,4 +76,4 @@ class JsonTest {
     public static void main(String[] args) {
         System.out.println(new User());
     }
-}
+}*/

@@ -39,7 +39,8 @@ class GroupingBuilderTest {
     @Test
     @DisplayName("")
     public void groupingAndGetCollectorTest() {
-        Collector<? super Car, ?, Map<Brand, Map<Color, List<Car>>>> carGroupingCollector = groupOn(Car::getColor).after(Car::getBrand).get();
+        Collector<? super Car, ?, Map<Brand, Map<Color, List<Car>>>> carGroupingCollector = groupOn(Car::getColor)
+                                                                                                .after(Car::getBrand).get();
         var i = carGroupingCollector.accumulator();
         assertThat(i).isEqualTo((BiConsumer.class).getClassLoader());
     }

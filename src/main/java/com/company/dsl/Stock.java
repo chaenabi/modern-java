@@ -51,6 +51,7 @@ class Order {
     }
 }
 
+// [1]
 class MethodChainingOrderBuilder {
     public final Order order = new Order();
 
@@ -78,6 +79,7 @@ class MethodChainingOrderBuilder {
     }
 }
 
+// [2]
 class TradeBuilder {
     private final MethodChainingOrderBuilder builder;
     public final Trade trade = new Trade();
@@ -92,6 +94,7 @@ class TradeBuilder {
     }
 }
 
+// [3]
 class StockBuilder {
     private final MethodChainingOrderBuilder builder;
     private final Trade trade;
@@ -142,6 +145,7 @@ class StockOrderTest {
         //then
         assertThat(order.getCustomer()).isEqualTo("BigBank");
         assertThat(order.getValue()).isSameAs(10000);
+
     }
 }
 
