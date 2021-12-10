@@ -74,22 +74,18 @@ public class PubSub {
 
         @Override
         public void request(long n) {
-            //es.execute(() -> {
-            //    int i = 0;
-            //    while (i++ < n) {
-                  while (n-- > 0) {
-                    try {
-                        if (iterator.hasNext()) {
-                            subscriber.onNext(iterator.next());
-                        } else {
-                            subscriber.onComplete();
-                            break;
-                        }
-                    } catch (RuntimeException e) {
-                        subscriber.onError(e);
+              while (n-- > 0) {
+                try {
+                    if (iterator.hasNext()) {
+                        subscriber.onNext(iterator.next());
+                    } else {
+                        subscriber.onComplete();
+                        break;
                     }
+                } catch (RuntimeException e) {
+                    subscriber.onError(e);
                 }
-        //    });
+            }
         } // publisher 가 push 한 데이터 중 몇 개까지 받을지 제어하는 메서드 (long.maximum 설정하면 전부 받게 된다.)
         // subscriber 가 request 메서드를 실행해도 publisher 쪽에서 추가 이벤트 또는 추가 값 생성이 되지 않았다면 값을 전달받지 못할 수 있다.
 
