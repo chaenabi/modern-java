@@ -2,6 +2,7 @@
 /out/
 .idea
 *.iml
+target/
 .idea/.gitignore
 .idea/description.html
 .idea/encodings.xml
