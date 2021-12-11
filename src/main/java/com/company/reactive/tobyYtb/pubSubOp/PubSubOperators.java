@@ -27,13 +27,18 @@ public class PubSubOperators {
     public static void main(String[] args) throws InterruptedException {
         Iterable<Integer> iterable = Stream.iterate(1, a -> a + 1).limit(10).collect(Collectors.toList());
         Flow.Publisher<Integer> pub = (subscriber) -> subscriber.onSubscribe(new Subscription1(subscriber, iterable));
-        pub = mapPub(pub, i -> i * 10);
+        pub = mapPub(pub, (i) -> i * 10);
         Subscriber1<Integer> logSub = new Subscriber1<>();
         pub.subscribe(logSub);
     }
 
-    private static Flow.Publisher<Integer> mapPub(Flow.Publisher<Integer> pub, Function<Integer, Integer> f) {
-        return sub -> pub.subscribe(new DelegateSub<>(sub, f));
+    private static <T, R> Flow.Publisher<T> mapPub(Flow.Publisher<T> pub, Function<T, T> f) {
+        return sub -> pub.subscribe(new DelegateSub<T, R>(sub) {
+            @Override
+            public void onNext(T t) {
+                super.onNext(f.apply(t));
+            }
+        });
     }
 
     static class Subscriber1<T> implements Flow.Subscriber<T> {
@@ -68,8 +73,8 @@ public class PubSubOperators {
 
     static class Subscription1 implements Flow.Subscription {
 
-        final Flow.Subscriber<? super Integer> subscriber;
-        final Iterable<? extends Integer> iterable;
+        final Flow.Subscriber<? super Integer> subscriber; // 값을 저장하는 친구
+        final Iterable<? extends Integer> iterable; // 그 저장된 값을 사용하는 친구
         final Iterator<? extends Integer> iterator;
 
         public Subscription1(Flow.Subscriber<? super Integer> subscriber, Iterable<? extends Integer> iterable) {

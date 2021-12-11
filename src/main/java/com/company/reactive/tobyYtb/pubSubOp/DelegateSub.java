@@ -1,18 +1,14 @@
 package com.company.reactive.tobyYtb.pubSubOp;
 
 import java.util.concurrent.Flow;
-import java.util.function.Function;
 
-public class DelegateSub<T> implements Flow.Subscriber<T> {
+public abstract class DelegateSub<T, R> implements Flow.Subscriber<T> {
 
-    private final Flow.Subscriber<T> sub;
-    private final Function f;
+    private final Flow.Subscriber<? super T> sub;
 
-    public DelegateSub(Flow.Subscriber<T> sub, Function f) {
+    public DelegateSub(Flow.Subscriber<? super T> sub) {
         this.sub = sub;
-        this.f = f;
     }
-
 
     @Override
     public void onSubscribe(Flow.Subscription subscription) {
@@ -21,7 +17,7 @@ public class DelegateSub<T> implements Flow.Subscriber<T> {
 
     @Override
     public void onNext(T t) {
-        sub.onNext((T) f.apply(t));
+        sub.onNext(t);
     }
 
     @Override
