@@ -1,6 +1,5 @@
 package com.company.jsonFormat;
 
-import com.google.gson.Gson;
 import lombok.ToString;
 
 public class JsonFormat<T> {
@@ -13,7 +12,7 @@ public class JsonFormat<T> {
 
     @Override
     public String toString() {
-        return new Gson().toJson(clazz);
+        return "json";
     }
 }
 

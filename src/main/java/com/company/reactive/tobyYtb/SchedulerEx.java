@@ -15,6 +15,7 @@ import java.util.concurrent.Flow;
 /**
  * Schedulers.computation() 을 이용해서 계산 작업을 처리하는 예제
  */
+@Slf4j
 public class SchedulerEx {
     public static void main(String[] args) {
         Observable<Integer> observable1 = Observable.fromIterable(List.of(30, 40, 50, 60, 70,
@@ -30,6 +31,7 @@ public class SchedulerEx {
                 .subscribe(System.out::println);
 
         source.subscribe();
+        log.info("1");
         //TimeUtil.sleep(500L);
     }
 }

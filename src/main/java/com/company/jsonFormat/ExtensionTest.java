@@ -1,12 +1,11 @@
 package com.company.jsonFormat;
 
-import com.google.gson.Gson;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.ExtensionMethod;
 
 class 널검사기 {
     public static <T> String 널이냐(T source) {
-        return source != null ? new Gson().toJson(source) : "널인데요??";
+        return source != null ? "널 아니에요!" : "널인데요??";
     }
 }
 
