@@ -21,7 +21,7 @@ class WeirdAccount extends Account {
 
     @Override
     protected void finalize() throws Throwable {
-        this.transfer(100_000_000, "informix");
+        this.transfer(100_000_000, "Git");
     }
 }
 
@@ -29,7 +29,7 @@ public class Finalize {
 
     public static void main(String[] args) throws InterruptedException {
         Account account1 = new Account("charlie");
-        account1.transfer(1000, "informix");
+        account1.transfer(1000, "Git");
 
         Account account2 = null;
         try {
@@ -37,7 +37,6 @@ public class Finalize {
         } catch (Exception e) {
             System.out.println("푸틴은 안되야 하는데...?");
         }
-
         System.gc();
         Thread.sleep(3000);
     }

@@ -9,7 +9,15 @@ public class Comment {
         System.out.println(number);
         // \u000a number = 2;
         System.out.println(number);
-        /*/*$/%\u0126//^\u002A\u002F number = 3;//*/
+        /*/*$/%\u0126//^\u002A\u002F
+
+        number = 3;
+
+
+
+        //*/
+
+
         System.out.println(number);
 
     }
