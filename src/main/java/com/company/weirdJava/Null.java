@@ -9,6 +9,6 @@ public class Null {
 
     public static void main(String... args) {
         Null nil = new Null();
-        System.out.println(nil.getNull().number);
+        System.out.println(Null.number);
     }
 }
